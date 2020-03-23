@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Row } from "antd";
+import { Row, Button } from "antd";
 import { API_URL, API_KEY, IMAGE_BASE_URL } from "../../Config";
-import Banner from "./Section/Banner";
+import Banner from "../common/Banner";
 import GridCard from "../common/GridCard";
 
 function LandingPage() {
@@ -42,13 +42,15 @@ function LandingPage() {
                <Row gutter={[16, 16]}>
                   {Movies.map(movie => (
                      <React.Fragment key={movie.id}>
-                        <GridCard image={movie.poster_path ? `${IMAGE_BASE_URL}w500${movie.poster_path}` : null} movieName={movie.title} movieId={movie.id}></GridCard>
+                        <GridCard landingPage image={movie.poster_path ? `${IMAGE_BASE_URL}w500${movie.poster_path}` : null} movieName={movie.title} movieId={movie.id}></GridCard>
                      </React.Fragment>
                   ))}
                </Row>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-               <button onClick={onButton}>Load more</button>
+               <Button type="primary" size="large" onClick={onButton}>
+                  Load more
+               </Button>
             </div>
          </div>
       )
