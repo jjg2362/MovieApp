@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API_URL, API_KEY, IMAGE_BASE_URL } from "../../Config";
 import { Row, Button } from "antd";
+import Axios from "axios";
 import Banner from "../common/Banner";
 import MovieInfo from "./Section/MovieInfo";
 import Favorite from "./Section/Favorite";
@@ -8,10 +9,14 @@ import Comment from "./Section/Comment";
 import GridCard from "../common/GridCard";
 
 function MovieDetailPage(props) {
+   const userFrom = localStorage.getItem("userId");
+   const movieId = props.match.params.movieId;
+
    const [Movie, setMovie] = useState([]);
    const [Casts, setCasts] = useState([]);
+   const [Comments, setComments] = useState([]);
+
    const [OpenActorView, setOpenActorView] = useState(false);
-   const movieId = props.match.params.movieId;
 
    useEffect(() => {
       const infoEndpoint = `${API_URL}movie/${movieId}?api_key=${API_KEY}&language=en-US&page=1`;
@@ -27,7 +32,20 @@ function MovieDetailPage(props) {
          .then(response => {
             setCasts(...[response.cast]);
          });
+
+      let variables = { writer: userFrom, movieId: movieId };
+      Axios.post("/api/comment/getComments", variables).then(response => {
+         if (response.data.success) {
+            setComments(response.data.comments);
+         } else {
+            alert("Failed to get comments");
+         }
+      });
    }, []);
+
+   const refreshComment = newComment => {
+      setComments(Comments.concat(newComment));
+   };
 
    const onActorViewButton = () => {
       setOpenActorView(!OpenActorView);
@@ -39,7 +57,7 @@ function MovieDetailPage(props) {
 
          <div style={{ width: "85%", margin: "1rem auto" }}>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-               <Favorite userFrom={localStorage.getItem("userId")} movieId={movieId} movieInfo={Movie} />
+               <Favorite userFrom={userFrom} movieId={movieId} movieInfo={Movie} />
             </div>
 
             <MovieInfo movie={Movie} />
@@ -64,6 +82,10 @@ function MovieDetailPage(props) {
                   )}
                </div>
             )}
+
+            <h2>Share your opinions about {Movie.title}</h2>
+            <hr />
+            <Comment userId={userFrom} movieId={Movie.id} comments={Comments} refreshFunc={refreshComment} />
          </div>
       </div>
    );
