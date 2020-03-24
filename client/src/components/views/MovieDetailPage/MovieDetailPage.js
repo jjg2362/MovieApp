@@ -6,6 +6,7 @@ import Banner from "../common/Banner";
 import MovieInfo from "./Section/MovieInfo";
 import Favorite from "./Section/Favorite";
 import Comment from "./Section/Comment";
+import LikeDislike from "./Section/LikeDislike";
 import GridCard from "../common/GridCard";
 
 function MovieDetailPage(props) {
@@ -82,6 +83,9 @@ function MovieDetailPage(props) {
                   )}
                </div>
             )}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+               <LikeDislike movie userId={userFrom} movieId={movieId} />
+            </div>
 
             <h2>Share your opinions about {Movie.title}</h2>
             <hr />
