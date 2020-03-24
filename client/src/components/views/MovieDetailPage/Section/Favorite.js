@@ -6,16 +6,18 @@ function Favorite(props) {
    const userFrom = props.userFrom;
    const movieId = props.movieId;
    const movieTitle = props.movieInfo.title;
-   const movieRuntile = props.movieInfo.runtime;
+   const movieRunTime = props.movieInfo.runtime;
+   const moviePost = props.movieInfo.poster_path;
 
    const [FavoriteNumber, setFavoriteNumber] = useState(0);
    const [Favorited, setFavortited] = useState(false);
 
-   let variables = {
-      userFrom: userFrom,
-      movieId: movieId
-   };
    useEffect(() => {
+      let variables = {
+         userFrom: userFrom,
+         movieId: movieId
+      };
+
       Axios.post("/api/favorite/favoriteNumber", variables).then(response => {
          if (response.data.success) {
             setFavoriteNumber(response.data.favoriteNum);
@@ -34,6 +36,14 @@ function Favorite(props) {
    }, []);
 
    const onFavorite = () => {
+      let variables = {
+         userFrom: userFrom,
+         movieId: movieId,
+         movieTitle: movieTitle,
+         moviePost: moviePost,
+         movieRunTime: movieRunTime
+      };
+
       if (Favorited) {
          Axios.post("/api/favorite/unfavorite", variables).then(response => {
             if (response.data.success) {

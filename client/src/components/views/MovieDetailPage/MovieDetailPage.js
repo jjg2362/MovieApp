@@ -4,6 +4,7 @@ import { Row, Button } from "antd";
 import Banner from "../common/Banner";
 import MovieInfo from "./Section/MovieInfo";
 import Favorite from "./Section/Favorite";
+import Comment from "./Section/Comment";
 import GridCard from "../common/GridCard";
 
 function MovieDetailPage(props) {
