@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
+const Schema = mongoose.Schema;
 
 const favoriteSchema = mongoose.Schema(
    {
@@ -16,7 +16,7 @@ const favoriteSchema = mongoose.Schema(
       moviePost: {
          type: String
       },
-      movieRuntime: {
+      movieRunTime: {
          type: String
       }
    },
