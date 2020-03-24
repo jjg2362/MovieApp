@@ -3,6 +3,7 @@ import { API_URL, API_KEY, IMAGE_BASE_URL } from "../../Config";
 import { Row, Button } from "antd";
 import Banner from "../common/Banner";
 import MovieInfo from "./Section/MovieInfo";
+import Favorite from "./Section/Favorite";
 import GridCard from "../common/GridCard";
 
 function MovieDetailPage(props) {
@@ -36,6 +37,10 @@ function MovieDetailPage(props) {
          <Banner image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`} title={Movie.title} desc={Movie.overview} />
 
          <div style={{ width: "85%", margin: "1rem auto" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+               <Favorite userFrom={localStorage.getItem("userId")} movieId={movieId} movieInfo={Movie} />
+            </div>
+
             <MovieInfo movie={Movie} />
             <div style={{ display: "flex", justifyContent: "center", margin: "2rem" }}>
                <Button type="primary" size="large" onClick={onActorViewButton}>
